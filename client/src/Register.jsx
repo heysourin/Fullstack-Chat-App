@@ -25,19 +25,6 @@ const Register = () => {
     }
   }
  
-  // async function register(e) {
-  //   e.preventDefault()
-  //   try {
-  //     const response = await fetch('http://localhost:8080/register', {
-  //       method: 'POST',
-  //       body: JSON.stringify({ username, password }),
-  //       headers: { 'Content-Type': 'application/json' },
-  //     })
-  //     console.log(response)
-  //   } catch (error) {
-  //     alert('Failed to register.', error)
-  //   }
-  // }
   return (
     <div className="bg-blue-50 h-screen flex items-center">
       <form action="" className="w-64 mx-auto mb-12" onSubmit={register}>
@@ -47,14 +34,14 @@ const Register = () => {
           type="text"
           placeholder="username"
           className="block w-full rounded- p-2 mb-2 border"
-        />
+          />
         <input
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
           placeholder="password"
           className="block w-full rounded- p-2 mb-2 border"
-        />
+          />
         <button className="bg-blue-500 text-white w-full block rounded- p-2 mb-2">
           Register
         </button>
@@ -64,3 +51,17 @@ const Register = () => {
 }
 
 export default Register
+
+// async function register(e) {
+//   e.preventDefault()
+//   try {
+//     const response = await fetch('http://localhost:8080/register', {
+//       method: 'POST',
+//       body: JSON.stringify({ username, password }),
+//       headers: { 'Content-Type': 'application/json' },
+//     })
+//     console.log(response)
+//   } catch (error) {
+//     alert('Failed to register.', error)
+//   }
+// }
