@@ -5,6 +5,8 @@ import { UserContext } from './UserContect.jsx'
 const Register = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoginOrRegister, setIsLoginOrRegister] = useState('register')
+
   const { setLoggedInUsername, setId } = useContext(UserContext)
 
   async function register(e) {
@@ -15,16 +17,17 @@ const Register = () => {
         { username, password },
         {
           headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
         },
       )
       setLoggedInUsername(username)
-      setId(data.id)
+      setId(data.id) // '_id' from mongodb
       console.log(data)
     } catch (error) {
       console.error(error)
     }
   }
- 
+
   return (
     <div className="bg-blue-50 h-screen flex items-center">
       <form action="" className="w-64 mx-auto mb-12" onSubmit={register}>
@@ -34,34 +37,25 @@ const Register = () => {
           type="text"
           placeholder="username"
           className="block w-full rounded- p-2 mb-2 border"
-          />
+        />
         <input
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
           placeholder="password"
           className="block w-full rounded- p-2 mb-2 border"
-          />
-        <button className="bg-blue-500 text-white w-full block rounded- p-2 mb-2">
-          Register
+        />
+        <button className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 bg-blue-500 w-full block rounded- p-2">
+          {/* Register */}
+          {isLoginOrRegister == 'register' ? 'Register' : 'Log in'}
         </button>
+        <div className="text-center mt-2">
+          Already a member?
+          <button onClick={() => setIsLoginOrRegister('login')}>Log In</button>
+        </div>
       </form>
     </div>
   )
 }
 
 export default Register
-
-// async function register(e) {
-//   e.preventDefault()
-//   try {
-//     const response = await fetch('http://localhost:8080/register', {
-//       method: 'POST',
-//       body: JSON.stringify({ username, password }),
-//       headers: { 'Content-Type': 'application/json' },
-//     })
-//     console.log(response)
-//   } catch (error) {
-//     alert('Failed to register.', error)
-//   }
-// }

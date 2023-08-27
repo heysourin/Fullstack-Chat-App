@@ -6,3 +6,8 @@ export default {
   },
   plugins: [],
 }
+
+/**
+ content: ['./src/*.jsx']: what types of files it should look for
+ * 
+ */

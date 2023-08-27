@@ -1,7 +1,8 @@
 import axios from 'axios'
 import Register from './Register'
 import { UserContextProvider } from './UserContect'
-
+// import { useContext } from 'react'
+import Routes from './Routes'
 function App() {
   // axios.defaults.baseURL = 'http://localhost:8080'
   // axios.defaults.withCredentials = true
@@ -10,11 +11,12 @@ function App() {
   //   baseURL: 'http://localhost:8080',
   //   withCredentials: true,
   // })
-
+  // const { loggedInUsername } = useContext(UserContext)
+  // console.log(loggedInUsername)
   return (
     <>
       <UserContextProvider>
-        <Register />
+        <Routes />
       </UserContextProvider>
     </>
   )
