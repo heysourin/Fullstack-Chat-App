@@ -1,5 +1,3 @@
-import axios from 'axios'
-import Register from './Register'
 import { UserContextProvider } from './UserContect'
 // import { useContext } from 'react'
 import Routes from './Routes'

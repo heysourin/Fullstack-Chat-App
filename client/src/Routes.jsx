@@ -1,5 +1,6 @@
 import React from 'react'
-import Register from './Register'
+import Chat from './Chat'
+import RegisterAndLoginForm from './RegisterAndLoginForm'
 import { UserContext, UserContextProvider } from './UserContect'
 import { useContext } from 'react'
 
@@ -8,12 +9,17 @@ const Routes = () => {
   // console.log(loggedInUsername)
 
   if (loggedInUsername) {
-    return 'loggedin!!'
+    // return 'loggedin as ' + loggedInUsername
+    return(
+      <>
+      <Chat/>
+      </>
+    )
   }
 
-  return(
+  return (
     <>
-    <Register/>
+      <RegisterAndLoginForm />
     </>
   )
 }
