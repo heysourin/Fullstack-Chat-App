@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const bcrypt = require('bcrypt')
+const ws = require('ws')
 
 const app = express()
 app.use(cors({ credentials: true, origin: 'http://localhost:5173' }))
@@ -88,4 +89,44 @@ app.post('/login', async (req, res) => {
   }
 })
 
-app.listen(8080, () => console.log('Server running at 8080'))
+const server = app.listen(8080, () => console.log('Server running at 8080'))
+const wss = new ws.WebSocketServer({ server })
+// console.log(wss);
+wss.on('connection', (connection, req) => {
+  // console.log(req.headers.cookie);// gonna grab cookies from headers
+  //to show active users: wss.clients()
+
+  const cookies = req.headers.cookie
+  //to get only single cookie:
+  if (cookies) {
+    const tokenCookieStr = cookies
+      .split(';')
+      .find((str) => str.startsWith('token='))
+    // console.log(tokenCookieStr)
+    if (tokenCookieStr) {
+      const token = tokenCookieStr.split('=')[1]
+      if (token) {
+        // console.log(token)
+        jwt.verify(token, jwtSecret, {}, (err, userData) => {
+          if (err) throw err
+          // console.log(userData)//userid, username, isat
+          const { userId, username } = userData
+          connection.userId = userId
+          connection.username = username
+        })
+      }
+    }
+  }
+
+  // console.log([...wss.clients].map((c) => c.username));
+  ;[...wss.clients].map((client) => {
+    client.send(
+      JSON.stringify({
+        onile: [...wss.clients].map((c) => ({
+          userId: c.userId,
+          username: c.username,
+        })),
+      }),
+    )
+  })
+})
